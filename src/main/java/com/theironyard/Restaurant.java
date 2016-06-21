@@ -24,6 +24,9 @@ public class Restaurant {
     @Column(nullable = false)
     String comment;
 
+    public Restaurant() {
+    }
+
     public Restaurant(String name, String location, int rating, String comment) {
         this.name = name;
         this.location = location;
