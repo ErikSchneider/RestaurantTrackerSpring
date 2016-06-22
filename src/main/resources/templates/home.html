@@ -8,7 +8,7 @@
 <form action="/logout" method="post">
     <button type="submit">Logout</button>
 </form>
-
+<br>
 <form action="/create-restaurant" method="post">
     <input type="text" name="name" placeholder="Name"/>
     <input type="text" name="location" placeholder="Location"/>
@@ -22,12 +22,21 @@
     <input type="text" name="comment" placeholder="Comment"/>
     <button type="submit" >Submit Restaurant</button>
 </form>
+<br>
+<form action="/" method="get">
+    <input type="text" name="search" placeholder="Search Location">
+    <button type="submit">Search</button>
+</form>
 
 <br>
 
 <ol>
     {{#restaurants}}
     <b>{{name}}</b> - {{location}} | Rating: {{rating}}/5 | Comments: {{comment}}.
+    <form action="/edit-restaurant" method="post"   style="display: inline-block;">
+        <input type="hidden" name="id" value="{{id}}"/>
+        <a href="/edit-restaurant?id={{id}}">Edit Restaurant</a>
+    </form>
     <form action="/delete-restaurant" method="post"  style="display: inline-block;">
         <input type="hidden" name="id" value="{{id}}"/>
         <button type="submit">Delete Restaurant</button>
