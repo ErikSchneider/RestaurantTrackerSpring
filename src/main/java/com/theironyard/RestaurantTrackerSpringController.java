@@ -23,9 +23,9 @@ public class RestaurantTrackerSpringController {
 
 
     @PostConstruct
-    public void init(){
+    public void init() throws PasswordStorage.CannotPerformOperationException {
         if (users.count() == 0) {
-            User user = new User("Erik", "1234");
+            User user = new User("Erik", PasswordStorage.createHash("1234"));
             users.save(user);
         }
     }
@@ -64,10 +64,10 @@ public class RestaurantTrackerSpringController {
     public String login(String username, String password, HttpSession session) throws Exception {
         User user = users.findByName(username);
         if (user == null){
-            user = new User(username, password);
+            user = new User(username, PasswordStorage.createHash(password));
             users.save(user); //*** .save is a method from CrudRepository ***
         }
-        else if (!user.password.equals(password)) {
+        else if (!PasswordStorage.verifyPassword(password, user.password)) {
             throw new Exception("Wrong Password");
         }
         session.setAttribute("username", username);
